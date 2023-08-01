@@ -17,6 +17,60 @@
   - `npm run test-calculator`
 */
 
-class Calculator {}
+class Calculator {
+  constructor() {
+    this.result = 0;
+  }
 
-module.exports = Calculator;
+  verify(num) {
+    if (typeof num !== "number" || isNaN(num)) {
+      throw new Error("Invalid input. Please input a valid number.");
+    }
+  }
+  add(num) {
+    this.verify(num);
+    this.result += num;
+  }
+  subtract(num) {
+    this.verify(num);
+    this.result -= num;
+  }
+  multiply(num) {
+    this.verify(num);
+    this.result *= num;
+  }
+  divide(num) {
+    this.verify(num);
+    if (num === 0) throw new Error("Cannot divide by zero.");
+    this.result /= num;
+  }
+  clear() {
+    this.result = 0;
+  }
+  getResult() {
+    return this.result;
+  }
+  calculate(expression) {
+    // Remove all continuous spaces and validate input
+    const cleanedExpression = expression.replace(/\s+/g, "");
+    if (!/^[0-9+\-*/().]*$/.test(cleanedExpression)) {
+      throw new Error(
+        "Invalid input. Please provide a valid arithmetic expression."
+      );
+    }
+
+    // Use `eval()` to calculate the result
+    this.result = eval(cleanedExpression);
+  }
+}
+
+const calculator = new Calculator();
+calculator.add(10);
+calculator.subtract(2);
+calculator.multiply(3);
+calculator.divide(5);
+console.log(calculator.getResult()); // Output: 4
+
+calculator.clear();
+calculator.calculate("10 + 2 * (6 - (4 + 1) / 2) + 7");
+console.log(calculator.getResult()); // Output: 24

@@ -6,17 +6,59 @@
  */
 
 function waitOneSecond() {
-
+	return new Promise((resolve) => {
+		setTimeout(resolve, 1000);
+	});
 }
 
 function waitTwoSecond() {
-
+	return new Promise((resolve) => {
+		setTimeout(resolve, 2000);
+	});
 }
 
 function waitThreeSecond() {
-
+	return new Promise((resolve) => {
+		setTimeout(resolve, 3000);
+	});
 }
 
-function calculateTime() {
+async function calculateTime() {
+	const startTime = Date.now();
+	// waitOneSecond()
+	// 	.then(() => {
+	// 		waitTwoSecond()
+	// 			.then(() => {
+	// 				waitThreeSecond()
+	// 					.then(() => {
+	// 						const endTime = Date.now();
+	// 						const secondsTaken = (endTime - startTime) / 1000;
+	// 						console.log('Total time taken:', secondsTaken);
+	// 					})
+	// 					.catch((err) => {
+	// 						console.error('Error occured:', err.message);
+	// 					});
+	// 			})
+	// 			.catch((err) => {
+	// 				console.error('Error occured:', err.message);
+	// 			});
+	// 	})
+	// 	.catch((err) => {
+	// 		console.error('Error occured:', err.message);
+	// 	});
 
+	// A better way to do the above thing
+	try {
+		await waitOneSecond();
+		await waitTwoSecond();
+		await waitThreeSecond();
+
+		const endTime = Date.now();
+		const secondsTaken = (endTime - startTime) / 1000;
+		console.log('Total time taken:', secondsTaken);
+	} catch (error) {
+		console.error('Error occured:', error.message);
+	}
 }
+
+calculateTime();
